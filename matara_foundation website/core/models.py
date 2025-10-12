@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class GalleryImage(models.Model):
     title = models.CharField(max_length=100, blank=True)
@@ -44,7 +46,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True, null=True)
     author = models.CharField(max_length=100, default="Matara Moses Foundation")
-    content = models.TextField()
+    content = RichTextUploadingField()
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
