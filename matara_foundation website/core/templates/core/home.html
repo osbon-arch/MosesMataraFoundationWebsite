@@ -1,0 +1,114 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero-section d-flex align-items-center justify-content-center text-white">
+  <div class="overlay"></div> <!-- Mask overlay -->
+  <div class="container position-relative text-center">
+    <h1 class="display-4 fw-bold mb-3 typewriter">Educating Children, Empowering Futures</h1>
+    <p class="lead mb-4 fade-in-text">
+      Matara Moses Foundation empowers vulnerable children in Kenya by sponsoring their education,
+      providing mentorship, supplies, and hope for a brighter future.
+    </p>
+    <a href="#donate" class="btn btn-warning btn-lg">Donate Now</a>
+  </div>
+</section>
+
+<!-- Give Hope Through Education Section -->
+<section id="about" class="py-5 bg-white text-center">
+  <div class="container">
+    <h2 class="fw-bold text-warning mb-4">Give Hope Through Education</h2>
+    <p class="lead text-muted mx-auto" style="max-width: 750px;">
+      Millions of children in Kenya still miss out on the basic right to education.
+      About <span class="fw-bold text-success">1.8 million</span> children between the ages of 6 and 18
+      have either dropped out of school or have never attended at all. 
+      Many come from poor households where the cost of uniforms, supplies, or transport
+      is a heavy burden. Without urgent support, these children risk being left behind— 
+      not just in school, but in opportunities for health, livelihood, and full participation in society.
+    </p>
+
+    <!-- Stats -->
+    <div class="row mt-5 justify-content-center">
+      <div class="col-6 col-md-3 mb-4 text-center">
+        <div class="stat-circle"><span class="counter" data-target="10">0</span>+</div>
+        <p class="text-muted mt-2">Sponsors on Board</p>
+      </div>
+      <div class="col-6 col-md-3 mb-4 text-center">
+        <div class="stat-circle"><span class="counter" data-target="100">0</span>%</div>
+        <p class="text-muted mt-2">of Donations delivered</p>
+      </div>
+      <div class="col-6 col-md-3 mb-4 text-center">
+        <div class="stat-circle"><span class="counter" data-target="20">0</span>+</div>
+        <p class="text-muted mt-2">Sponsored children</p>
+      </div>
+      <div class="col-6 col-md-3 mb-4 text-center">
+        <div class="stat-circle"><span class="counter" data-target="5">0</span>+</div>
+        <p class="text-muted mt-2">KCSE candidates</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What We Do Section -->
+<section id="programs" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="fw-bold text-warning text-center mb-5">What We Do</h2>
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <p class="lead text-muted">
+          Moses Matara Foundation is a non-profit organization committed to transforming lives through education in Kenya. 
+          Guided by values of compassion, integrity, and community, our mission is to 
+          <span class="text-success fw-semibold">
+            provide vulnerable children with access to quality learning opportunities, resources, and mentorship.
+          </span> 
+          We believe that every child deserves the chance to learn, grow, and achieve their dreams. 
+          By empowering education today, we are building a brighter, more equitable tomorrow for generations to come.
+        </p>
+        <a href="#donate" class="btn btn-dark btn-lg mt-3">Learn More</a>
+      </div>
+      <div class="col-lg-6 text-center">
+        <img src="{% static 'images/what-we-do.jpg' %}" 
+             alt="Children learning" 
+             class="img-fluid rounded shadow-lg" 
+             loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Mission Section -->
+<section id="mission" class="mission-section d-flex align-items-center text-white">
+  <div class="overlay"></div>
+  <div class="container position-relative">
+    <div class="row align-items-center">
+      <div class="col-lg-7 mb-4 mb-lg-0">
+        <h2 class="fw-bold text-warning mb-4 text-center text-lg-start">Our Mission</h2>
+        <blockquote class="blockquote text-success fw-semibold mb-4">
+          “To empower vulnerable children in Kenya by providing access to quality 
+          education, mentorship, and resources that nurture their potential 
+          and create opportunities for a brighter future.”
+        </blockquote>
+        <p class="lead">
+          At Matara Moses Foundation, our mission is to break the cycle of poverty by ensuring that every child, 
+          regardless of their background, has the chance to learn and thrive. 
+          We believe education is the foundation of empowerment and lasting change. 
+          Through school sponsorships, provision of learning materials, and mentorship programs, 
+          we strive to give children the tools they need to dream big, achieve their goals, 
+          and contribute positively to their communities. 
+          By investing in education today, we are shaping tomorrow’s leaders and building a brighter future for generations to come.
+        </p>
+      </div>
+      <div class="col-lg-5 text-center">
+        <img src="{% static 'images/founder.jpg' %}" 
+             alt="Founder Image" 
+             class="img-fluid rounded shadow-lg founder-img mb-3" 
+             loading="lazy">
+        <h4 class="fw-bold text-white">Moses Matara Nyaroo</h4>
+        <p class="text-warning mb-3">Founder & Visionary</p>
+        <a href="#donate" class="btn btn-outline-light btn-lg">Letter from the Founder</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

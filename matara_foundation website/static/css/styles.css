@@ -1,0 +1,231 @@
+/* ==========================
+   Global & Mobile Fixes
+========================== */
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Sections */
+section {
+  scroll-margin-top: 80px; /* offset for sticky navbar */
+}
+
+/* ==========================
+   Navbar
+========================== */
+#mainNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background: transparent;
+  transition: background-color 0.4s ease, padding 0.3s ease;
+  padding: 10px 0; /* reduced padding */
+}
+
+
+#mainNav.scrolled {
+  background-color: #212529;
+  padding: 5px 0; /* tighter when scrolled */
+}
+.navbar-brand img {
+  height: 40px; /* reduce logo size */
+  max-height: 100%; 
+  width: auto;
+  transition: height 0.3s ease;
+}
+mainNav.scrolled .navbar-brand img {
+  height: 35px;
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+}
+
+.navbar-nav .btn {
+  color: #000;
+}
+
+/* Dropdown Styling */
+.navbar-nav .dropdown-menu {
+  background-color: #212529;
+}
+.navbar-nav .dropdown-item {
+  color: #fff;
+}
+.navbar-nav .dropdown-item:hover {
+  background-color: #ffc107;
+  color: #000;
+}
+
+/* Mobile toggle icon */
+.navbar-toggler {
+  border-color: #fff;
+}
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* ==========================
+   Hero Section
+========================== */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url('../images/hero-bg.jpg') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-section .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  z-index: 1;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+  padding: 0 1rem; /* small horizontal padding on mobile */
+}
+
+.typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #fff;
+  animation: typing 4s steps(40, end), cursor-blink 0.75s step-end 5;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes cursor-blink {
+  from, to { border-color: transparent; }
+  50% { border-color: #fff; }
+}
+
+.fade-in-text {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1.5s ease forwards;
+  animation-delay: 4.2s; /* after typing effect */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
+   Stats / Circles
+========================== */
+.stat-circle {
+  width: 120px;
+  height: 120px;
+  border: 6px solid #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #28a745;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s ease;
+}
+.stat-circle.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ==========================
+   Mission Section
+========================== */
+.mission-section {
+  position: relative;
+  padding: 80px 0;
+  background: url('../images/mission-bg.jpg') no-repeat center center/cover;
+}
+.mission-section .overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 1;
+}
+.mission-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.founder-img {
+  border: 5px solid #fff;
+  max-width: 300px;
+  transition: transform 0.4s ease;
+}
+.founder-img:hover {
+  transform: scale(1.05);
+}
+
+.blockquote {
+  font-size: 1.4rem;
+  font-style: italic;
+  border-left: 6px solid #28a745;
+  padding-left: 15px;
+}
+
+/* Fade-in for mission */
+.mission-section h2, 
+.mission-section blockquote, 
+.mission-section p, 
+.mission-section .founder-img {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s ease forwards;
+}
+.mission-section h2 { animation-delay: 0.2s; }
+.mission-section blockquote { animation-delay: 0.4s; }
+.mission-section p { animation-delay: 0.6s; }
+.mission-section .founder-img { animation-delay: 0.8s; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
+   Images & Responsiveness
+========================== */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 992px) {
+  .hero-section {
+    height: auto;
+    min-height: 70vh;
+    align-items: flex-end;
+    padding-bottom: 3rem;
+  }
+  .hero-section .overlay {
+    background: rgba(0,0,0,0.5);
+  }
+}

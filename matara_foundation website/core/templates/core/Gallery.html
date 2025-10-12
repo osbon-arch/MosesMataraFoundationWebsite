@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gallery</title>
+</head>
+<body>
+    <h1>Gallery</h1>
+
+    {% for item in galleries %}
+        <div>
+            <h2>{{ item.title }}</h2>
+            <img src="{{ item.image.url }}" alt="{{ item.title }}" width="300">
+            <p>{{ item.description }}</p>
+            <small>Uploaded on: {{ item.date_uploaded|date:"F j, Y" }}</small>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No gallery items found.</p>
+    {% endfor %}
+</body>
+</html>
