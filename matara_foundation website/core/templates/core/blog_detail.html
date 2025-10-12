@@ -1,0 +1,60 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <!-- Featured Image -->
+    {% if post.image %}
+    <div class="text-center mb-4">
+      <img src="{{ post.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ post.title }}" style="max-height: 450px; object-fit: cover;">
+    </div>
+    {% endif %}
+
+    <!-- Title -->
+    <h2 class="fw-bold text-warning text-center">{{ post.title }}</h2>
+    <p class="text-muted text-center">By {{ post.author }} · {{ post.created_at|date:"F j, Y" }}</p>
+
+    <!-- Content -->
+    <div class="mt-4 lead text-secondary">
+      {{ post.content|linebreaks }}
+    </div>
+
+    <!-- Social Share -->
+    <div class="text-center my-4">
+      <p class="fw-semibold">Share this story:</p>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-outline-primary btn-sm me-2">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" target="_blank" class="btn btn-outline-info btn-sm me-2">X (Twitter)</a>
+      <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}" target="_blank" class="btn btn-outline-success btn-sm">WhatsApp</a>
+    </div>
+
+    <!-- Comments -->
+    <div class="mt-5">
+      <h4 class="fw-bold text-dark mb-4">Comments</h4>
+
+      <!-- Comment Form -->
+      <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+          <input type="text" name="name" class="form-control" placeholder="Your name" required>
+        </div>
+        <div class="mb-3">
+          <textarea name="message" class="form-control" rows="3" placeholder="Write a comment..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-warning text-dark">Post Comment</button>
+      </form>
+
+      <!-- Comment List -->
+      {% for comment in comments %}
+      <div class="border-bottom pb-3 mb-3">
+        <strong>{{ comment.name }}</strong> 
+        <span class="text-muted small">{{ comment.created_at|date:"F j, Y, g:i a" }}</span>
+        <p class="mt-2">{{ comment.message }}</p>
+      </div>
+      {% empty %}
+      <p class="text-muted">No comments yet. Be the first to share your thoughts!</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

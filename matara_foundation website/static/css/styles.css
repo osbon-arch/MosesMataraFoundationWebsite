@@ -536,3 +536,33 @@ img {
   from { transform: scale(0.8); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+.blog-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.blog-card img {
+  height: 230px;
+  object-fit: cover;
+}
+.lead {
+  line-height: 1.8;
+}
+
+form textarea {
+  resize: none;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-info:hover,
+.btn-outline-success:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+

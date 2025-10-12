@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from .models import GalleryImage ,Event ,EventImage
+from django.shortcuts import get_object_or_404, redirect
+from .models import GalleryImage ,Event ,EventImage ,BlogPost ,Comment
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 
 # Create your views here.
 def home(request):
@@ -33,3 +35,35 @@ def event_images(request, event_id):
     images = EventImage.objects.filter(event_id=event_id)
     data = {"images": [{"url": i.image.url} for i in images]}
     return JsonResponse(data)
+
+def blog(request):
+    year_filter = request.GET.get('year')
+
+    if year_filter:
+        posts = BlogPost.objects.filter(created_at__year=year_filter).order_by('-created_at')
+    else:
+        posts = BlogPost.objects.all()
+
+    years = BlogPost.objects.dates('created_at', 'year', order='DESC')
+
+    return render(request, "core/blog.html", {
+        "posts": posts,
+        "years": years,
+    })
+#Blog View
+def blog_detail(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug)
+    comments = post.comments.all()
+
+    if request.method == "POST":
+        name = request.POST.get("name")
+        message = request.POST.get("message")
+
+        if name and message:
+            Comment.objects.create(post=post, name=name, message=message)
+            return redirect(post.get_absolute_url())
+
+    return render(request, "core/blog_detail.html", {
+        "post": post,
+        "comments": comments
+    })

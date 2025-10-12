@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<section id="blog" class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold text-warning">Stories of Inspiration</h2>
+      <p class="text-muted">Real lives transformed through education and hope.</p>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="row g-4">
+      {% for post in posts %}
+<div class="card mb-4 shadow-sm border-0">
+  {% if post.image %}
+  <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 250px; object-fit: cover;">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title fw-bold">{{ post.title }}</h5>
+    <p class="card-text text-muted small">By {{ post.author }} · {{ post.created_at|date:"F j, Y" }}</p>
+    <p class="card-text">{{ post.content|truncatewords:25 }}</p>
+    <a href="{{ post.get_absolute_url }}" class="btn btn-warning text-dark">Read More →</a>
+  </div>
+</div>
+{% empty %}
+<p class="text-muted text-center">No posts available yet.</p>
+{% endfor %}
+
+    </div>
+
+    <!-- Archive Filter -->
+    <div class="archive-section mt-5 text-center">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb justify-content-center">
+          <li class="breadcrumb-item">
+            <a href="{% url 'blog' %}" class="text-decoration-none text-warning">All Years</a>
+          </li>
+          {% for year in years %}
+          <li class="breadcrumb-item">
+            <a href="?year={{ year.year }}" class="text-decoration-none text-warning">{{ year.year }}</a>
+          </li>
+          {% empty %}
+          <li class="breadcrumb-item text-muted">No archives yet</li>
+          {% endfor %}
+        </ol>
+      </nav>
+    </div>
+  </div>
+</section>
+{% endblock %}

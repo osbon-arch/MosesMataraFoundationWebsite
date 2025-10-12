@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import GalleryImage, Event, EventImage
+from .models import GalleryImage, Event, EventImage ,BlogPost,Comment
 
 class EventImageInline(admin.TabularInline):
     model = EventImage
@@ -22,3 +22,15 @@ class GalleryImageAdmin(admin.ModelAdmin):
 @admin.register(EventImage)
 class EventImageAdmin(admin.ModelAdmin):
     list_display = ('event', 'uploaded_at')
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'created_at', 'featured')
+    list_filter = ('created_at', 'featured')
+    search_fields = ('title', 'content')
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'post', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('name', 'message')
