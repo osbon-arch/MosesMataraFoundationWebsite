@@ -111,4 +111,26 @@
     </div>
   </div>
 </section>
+
+<section id="gallery" class="gallery-arc-section py-5">
+  <div class="container text-center mb-4">
+    <h2 class="fw-bold text-warning">Our Gallery</h2>
+    <p class="text-muted">A glimpse into the lives we’re changing together.</p>
+  </div>
+
+  <div class="arc-gallery">
+    {% for img in images %}
+      <div class="arc-card">
+        <img src="{{ img.image.url }}" alt="{{ img.title }}">
+      </div>
+    {% empty %}
+      <p class="text-center text-muted">No images yet. Check back soon!</p>
+    {% endfor %}
+  </div>
+
+  <!-- Lightbox -->
+  <div id="arcLightbox">
+    <img src="" alt="Zoomed image">
+  </div>
+</section>
 {% endblock %}

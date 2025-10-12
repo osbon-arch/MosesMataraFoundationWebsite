@@ -1,21 +1,106 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Gallery</title>
-</head>
-<body>
-    <h1>Gallery</h1>
+{% extends "core/base.html" %}
+{% load static %}
 
-    {% for item in galleries %}
-        <div>
-            <h2>{{ item.title }}</h2>
-            <img src="{{ item.image.url }}" alt="{{ item.title }}" width="300">
-            <p>{{ item.description }}</p>
-            <small>Uploaded on: {{ item.date_uploaded|date:"F j, Y" }}</small>
+{% block content %}
+<section id="gallery" class="gallery-arc-section py-5">
+    <div class="container text-center mb-4">
+        <h2 class="fw-bold text-warning">Our Gallery</h2>
+        <p class="text-muted">A glimpse into the lives we’re changing together.</p>
+    </div>
+
+    <div class="arc-gallery">
+        {% for img in images %}
+        <div class="arc-card">
+            <img src="{{ img.image.url }}" alt="{{ img.title }}">
         </div>
-        <hr>
-    {% empty %}
-        <p>No gallery items found.</p>
-    {% endfor %}
-</body>
-</html>
+        {% empty %}
+        <p class="text-center text-muted">No images yet. Check back soon!</p>
+        {% endfor %}
+    </div>
+
+    <!-- Lightbox -->
+    <div id="arcLightbox">
+        <img src="" alt="Zoomed image">
+    </div>
+</section>
+
+<!-- Events & Highlights Section -->
+<section id="events" class="events-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-warning">Our Events & Highlights</h2>
+            <p class="text-muted">Stories and moments that shaped our mission over the years.</p>
+        </div>
+
+        <div class="row g-4">
+            {% for event in events %}
+            <div class="col-md-4">
+                <div class="event-card shadow-sm rounded overflow-hidden h-100">
+                    <img src="{{ event.images.first.image.url }}" alt="{{ event.title }}" class="img-fluid event-img">
+                    <div class="p-3">
+                        <h5 class="fw-bold text-dark mb-2">{{ event.title }}</h5>
+                        <p class="text-muted small">{{ event.date|date:"F j, Y" }}</p>
+                        <p class="text-secondary">{{ event.description|truncatewords:25 }}</p>
+                        <button class="btn btn-outline-warning btn-sm mt-2 view-images-btn"
+                            data-event-id="{{ event.id }}">
+                            View Images
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        <!-- Breadcrumb Filter -->
+        <div class="archive-section mt-5 text-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'gallery' %}" class="text-decoration-none text-warning">All Years</a>
+                    </li>
+                    {% for year in years %}
+                    <li class="breadcrumb-item">
+                        <a href="?year={{ year.year }}" class="text-decoration-none text-warning">{{ year.year }}</a>
+                    </li>
+                    {% empty %}
+                    <li class="breadcrumb-item text-muted">No archives yet</li>
+                    {% endfor %}
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<!-- Event Image Lightbox -->
+<div id="eventLightbox">
+    <div class="lightbox-content">
+        <span class="close-btn" onclick="closeEventGallery()">&times;</span>
+        <div id="lightboxImages" class="lightbox-images"></div>
+    </div>
+</div>
+
+<!-- Event Image Modal -->
+<div id="eventImageModal" class="event-modal">
+  <div class="event-modal-content">
+    <span class="event-modal-close">&times;</span>
+    <div id="eventImageGrid" class="event-image-grid"></div>
+  </div>
+</div>
+
+<!-- Fullscreen Lightbox -->
+<div id="lightboxOverlay" class="lightbox-overlay">
+  <span id="lightboxClose" class="lightbox-close">&times;</span>
+  <span id="lightboxPrev" class="lightbox-arrow">&#10094;</span>
+  <span id="lightboxNext" class="lightbox-arrow">&#10095;</span>
+  <img id="lightboxImage" src="" alt="">
+</div>
+
+<!-- Sound Effect -->
+<audio id="modalSound" preload="auto">
+  <source src="{% static 'audio/pop.mp3' %}" type="audio/mpeg">
+</audio>
+
+
+
+{% endblock %}
