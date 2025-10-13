@@ -53,15 +53,18 @@ def blog(request):
 #Blog View
 def blog_detail(request, slug):
     post = get_object_or_404(BlogPost, slug=slug)
-    comments = post.comments.all()
+    comments = Comment.objects.filter(post=post, parent__isnull=True)
 
     if request.method == "POST":
         name = request.POST.get("name")
         message = request.POST.get("message")
+        parent_id = request.POST.get("parent_id")
 
         if name and message:
-            Comment.objects.create(post=post, name=name, message=message)
-            return redirect(post.get_absolute_url())
+            parent_comment = Comment.objects.get(id=parent_id) if parent_id else None
+            Comment.objects.create(post=post, name=name, message=message, parent=parent_comment)
+
+        return redirect(post.get_absolute_url())
 
     return render(request, "core/blog_detail.html", {
         "post": post,

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from ckeditor.fields import RichTextField
+from embed_video.fields import EmbedVideoField
 from ckeditor_uploader.fields import RichTextUploadingField
 
 class GalleryImage(models.Model):
@@ -45,6 +46,7 @@ class EventImage(models.Model):
 class BlogPost(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True, null=True)
+    video = EmbedVideoField(blank=True, null=True)  # Optional video field
     author = models.CharField(max_length=100, default="Matara Moses Foundation")
     content = RichTextUploadingField()
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
@@ -68,13 +70,20 @@ class BlogPost(models.Model):
         return reverse("blog_detail", kwargs={"slug": self.slug})
 
 class Comment(models.Model):
-    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey('BlogPost', related_name='comments', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['created_at']
 
     def __str__(self):
-        return f"Comment by {self.name} on {self.post.title}"
+        return f"Comment by {self.name}"
+
+    def children(self):
+        return self.replies.all()
+
+    def is_parent(self):
+        return self.parent is None

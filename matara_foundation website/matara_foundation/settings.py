@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    'embed_video',
     'ckeditor_uploader',
     'core',
     
@@ -129,6 +130,25 @@ CKEDITOR_IMAGE_BACKEND = 'PILLOW'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Link', 'Unlink'],
+            ['NumberedList', 'BulletedList'],
+            ['Image', 'Iframe', 'Embed', 'EmbedSemantic'],
+            ['RemoveFormat', 'Source'],
+        ],
+        'extraPlugins': ','.join([
+            'embed', 'embedsemantic', 'iframe', 'autolink', 'dialog', 'dialogui', 'widget', 'lineutils'
+        ]),
+        'height': 400,
+        'width': '100%',
+    }
+}
+
+
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 

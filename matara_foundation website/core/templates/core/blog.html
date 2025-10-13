@@ -19,7 +19,7 @@
   <div class="card-body">
     <h5 class="card-title fw-bold">{{ post.title }}</h5>
     <p class="card-text text-muted small">By {{ post.author }} · {{ post.created_at|date:"F j, Y" }}</p>
-    <p class="card-text">{{ post.content|truncatewords:25 }}</p>
+    <p class="card-text">{{ post.content|truncatewords_html:25|safe }}</p>
     <a href="{{ post.get_absolute_url }}" class="btn btn-warning text-dark">Read More →</a>
   </div>
 </div>
