@@ -2,16 +2,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.getElementById("mainNav");
 
   // Navbar scroll effect
-  const handleNavScroll = () => {
-    if (window.scrollY > window.innerHeight - 80) {
-      nav.classList.add("scrolled");
-    } else {
-      nav.classList.remove("scrolled");
-    }
-  };
+// Navbar scroll effect
+document.addEventListener("scroll", () => {
+  const navbar = document.querySelector("#mainNav");
+  if (window.scrollY > 60) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
 
-  window.addEventListener("scroll", handleNavScroll);
-  handleNavScroll(); // run on load in case page is already scrolled
 
   // Stats counters + circle animation
   const circles = document.querySelectorAll(".stat-circle");
@@ -204,4 +204,36 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Escape") closeLightbox();
     }
   });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll(".map-bubble .count");
+  const section = document.querySelector(".map-wrapper");
+
+  const animateCount = (el, target) => {
+    let count = 0;
+    const step = Math.ceil(target / 60);
+    const timer = setInterval(() => {
+      count += step;
+      if (count >= target) {
+        count = target;
+        clearInterval(timer);
+      }
+      el.textContent = count + "+";
+    }, 20);
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      counters.forEach(c => {
+        const target = parseInt(c.textContent);
+        animateCount(c, target);
+      });
+      observer.disconnect();
+    }
+  }, { threshold: 0.3 });
+
+  observer.observe(section);
 });
