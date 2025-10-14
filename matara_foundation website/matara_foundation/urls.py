@@ -18,11 +18,16 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path,include
+from applications.admin import foundation_dashboard
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/dashboard/', admin.site.admin_view(foundation_dashboard), name='foundation_dashboard'),
+    
     path('ckeditor/', include('ckeditor_uploader.urls')), 
     path('', include('core.urls')),
     path('applications/', include('applications.urls')),
+     path('admin/', admin.site.urls),
+   
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

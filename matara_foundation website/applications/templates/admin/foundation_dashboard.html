@@ -1,0 +1,122 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Foundation Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <h1 class="text-center mb-4 text-warning fw-bold">Foundation Dashboard</h1>
+
+  <div class="row g-4">
+    <!-- Chart 1 -->
+    <div class="col-lg-6">
+      <div class="card shadow border-0">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-3">Children per County</h5>
+          <canvas id="countyChart" height="250"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart 2 -->
+    <div class="col-lg-6">
+      <div class="card shadow border-0">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-3">Average Performance by Term</h5>
+          <canvas id="performanceChart" height="250"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart 3 -->
+    <div class="col-12">
+      <div class="card shadow border-0">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-3">Top 5 Performing Schools</h5>
+          <canvas id="schoolChart" height="250"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Safely parse Django context data into JS
+  const counties = JSON.parse('{{ counties|safe|escapejs }}');
+  const childCounts = JSON.parse('{{ child_counts|safe|escapejs }}');
+  const terms = JSON.parse('{{ terms|safe|escapejs }}');
+  const avgScores = JSON.parse('{{ avg_grades|safe|escapejs }}');
+  const schools = JSON.parse('{{ schools|safe|escapejs }}');
+  const schoolPerformance = JSON.parse('{{ school_performance|safe|escapejs }}');
+
+  // --- Chart 1: Children per County ---
+  const countyCtx = document.getElementById("countyChart").getContext("2d");
+  new Chart(countyCtx, {
+    type: "bar",
+    data: {
+      labels: counties,
+      datasets: [
+        {
+          label: "Number of Children",
+          data: childCounts,
+          backgroundColor: "#ffc107",
+          borderRadius: 5
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // --- Chart 2: Average Performance by Term ---
+  const perfCtx = document.getElementById("performanceChart").getContext("2d");
+  new Chart(perfCtx, {
+    type: "line",
+    data: {
+      labels: terms,
+      datasets: [
+        {
+          label: "Average Grade",
+          data: avgScores,
+          borderColor: "#0d6efd",
+          backgroundColor: "rgba(13, 110, 253, 0.2)",
+          tension: 0.4,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // --- Chart 3: Top Performing Schools ---
+  const schoolCtx = document.getElementById("schoolChart").getContext("2d");
+  new Chart(schoolCtx, {
+    type: "bar",
+    data: {
+      labels: schools,
+      datasets: [
+        {
+          label: "Average Performance",
+          data: schoolPerformance,
+          backgroundColor: "#198754",
+          borderRadius: 5
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } }
+    }
+  });
+});
+</script>
+{% endblock %}
