@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<section class="py-5 bg-white">
+  <div class="container text-center">
+    <h2 class="fw-bold text-warning mb-4">Check Your Application Status</h2>
+    <form method="post" class="mx-auto mb-4" style="max-width: 500px;">
+      {% csrf_token %}
+      <div class="mb-3">
+        <input type="email" name="email" placeholder="Enter your email" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" name="phone_number" placeholder="Enter your phone number" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-warning w-100 fw-bold">Check Status</button>
+    </form>
+
+    {% if application %}
+      <div class="card shadow-sm p-4 mt-4">
+        <h5 class="fw-bold text-dark">{{ application.full_name }}</h5>
+        <p>Status: 
+          <span class="badge 
+            {% if application.status == 'accepted' %}bg-success
+            {% elif application.status == 'rejected' %}bg-danger
+            {% else %}bg-secondary{% endif %}">
+            {{ application.get_status_display }}
+          </span>
+        </p>
+        {% if application.remarks %}
+          <p><strong>Remarks:</strong> {{ application.remarks }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

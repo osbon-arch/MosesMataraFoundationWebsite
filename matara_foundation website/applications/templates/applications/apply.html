@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% load static %}  
+{% block content %}
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold text-warning mb-4">Apply for Sponsorship</h2>
+    <p class="text-center text-muted mb-5">Download the form, fill it, and upload below.</p>
+
+    <div class="text-center mb-4">
+      <a href="{% static 'documents/application_form.pdf' %}" class="btn btn-dark px-4 py-2" download>
+        <i class="fa-solid fa-file-arrow-down me-2"></i> Download Application Form
+      </a>
+    </div>
+
+    <div class="card shadow-lg p-4 mx-auto" style="max-width: 600px;">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-warning w-100 fw-bold">Submit Application</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

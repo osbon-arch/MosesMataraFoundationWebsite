@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'embed_video',
     'ckeditor_uploader',
     'core',
+    'applications',
     
 ]
 
