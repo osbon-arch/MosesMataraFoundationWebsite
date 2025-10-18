@@ -68,7 +68,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['mosesmatarafoundationwebsite.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 ROOT_URLCONF = 'matara_foundation.urls'
@@ -97,7 +98,11 @@ WSGI_APPLICATION = 'matara_foundation.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
