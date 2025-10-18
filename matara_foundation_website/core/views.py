@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect
 from .models import GalleryImage ,Event ,EventImage ,BlogPost ,Comment
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from .models import ContactMessage
 from .models import HeroSection
+from django.contrib.auth.models import User
 
 # Home view
 def home(request):
@@ -110,3 +111,9 @@ def contact(request):
         return redirect("contact")
 
     return render(request, "core/contact.html")
+
+def create_admin(request):
+    if User.objects.filter(username="admin").exists():
+        return HttpResponse("Admin user already exists")
+    User.objects.create_superuser("admin", "admin@example.com", "AdminPass123")
+    return HttpResponse("Superuser created successfully!")
