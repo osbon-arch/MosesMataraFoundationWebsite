@@ -28,7 +28,7 @@ def gallery(request):
     years = Event.objects.dates('date', 'year', order='DESC')
     images = GalleryImage.objects.all()
 
-    return render(request, "core/gallery.html", {
+    return render(request, "core/Gallery.html", {
         "images": images,
         "events": events,
         "years": years
